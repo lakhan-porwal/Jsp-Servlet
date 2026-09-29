@@ -5,20 +5,22 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+//Iska main kaam hai Connection Pooling.
+//Connection lo -> Database ka kaam karo -> Connection close
 
-//1. Provide Connection Re-useablity.
-//2. Provide Reliable Connection with database.
-//3. Provide Maximum Connection limitation with database.
 public final class JDBCDataSource {
 
-	private static final JDBCDataSource jdbc = null;
-	private ComboPooledDataSource cpds = null;
+	private static JDBCDataSource jdbc = null;
+	private ComboPooledDataSource cpds = null; // Ye object database connections ko manage karega.
 
 	private static ResourceBundle rb = ResourceBundle.getBundle("in.com.rays.bundle.system");
 
 	private JDBCDataSource() {
 
-		cpds = new ComboPooledDataSource();
+		// Ye private constructor hai. Iska important purpose: Bahari class directly
+		// object nahi bana sakti.
+
+		cpds = new ComboPooledDataSource(); // Yahan connection pool create ho raha hai.
 
 		try {
 			cpds.setDriverClass(rb.getString("driver"));
@@ -37,20 +39,29 @@ public final class JDBCDataSource {
 
 	private static JDBCDataSource getInstance() {
 
+		// Ye method JDBCDataSource ka object provide karne ke liye hai.
+
 		if (jdbc == null) {
-			return new JDBCDataSource();
+			jdbc = new JDBCDataSource();
 		}
 		return jdbc;
 	}
 
 	public static Connection getConnection() {
 
+		// Ye method application ko database connection provide karta hai.
+
 		try {
 			return getInstance().cpds.getConnection();
-		} catch (SQLException e) {
+
+			// getInstance() ->JDBCDataSource ka object deta hai.
+			// .cpds -> us object ka connection pool access karta hai.
+			// .getConnection() -> pool se ek connection leta hai.
+
+		} catch (SQLException e) { // Agar database connection lene me problem aaye, SQLException handle hogi.
 			e.printStackTrace();
 		}
-		return null;
+		return null; // Agar connection nahi milta, method null return karega.
 
 	}
 
@@ -73,5 +84,4 @@ public final class JDBCDataSource {
 			}
 		}
 	}
-
 }

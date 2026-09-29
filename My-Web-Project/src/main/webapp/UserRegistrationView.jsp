@@ -42,7 +42,7 @@
 				<tr>
 					<th>Password</th>
 					<td><input type="password" name="password" value=""
-						placeholder="enter your password"></td>
+						placeholder=submit"enter your password"></td>
 				</tr>
 
 				<tr>
@@ -52,7 +52,7 @@
 
 				<tr>
 					<th></th>
-					<td><input type="submit" name="operation" value="signUp"></td>
+					<td><input type="" name="operation" value="signUp"></td>
 				</tr>
 
 			</table>
