@@ -1,36 +1,21 @@
 package in.co.rays.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.ResourceBundle;
-
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ServletUtility {
 
-	public static Connection getConnection() {
+	
+	public static void forward(String view, HttpServletRequest request, HttpServletResponse response) {
 
-		ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.bundle.system");
-
-		Connection conn = null;
-
+		RequestDispatcher rd = request.getRequestDispatcher(view);
 		try {
-
-			Class.forName(rb.getString("driver"));
-
-			conn = DriverManager.getConnection(rb.getString("url"), rb.getString("username"), rb.getString("password"));
-
+			rd.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return conn;
-
 	}
-
-	public static void forward(String string, HttpServletRequest request, HttpServletResponse response) {
-		
-	}
-
 }
+
